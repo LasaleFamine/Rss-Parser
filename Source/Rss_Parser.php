@@ -77,9 +77,29 @@ class Rss_Parser {
 	 */
 	protected function parseItem(DOMNode $item){
 		$rss_item = new Rss_Item();
-		$rss_item->setTitle(		$item->getElementsByTagName("title")->item(0)->firstChild->data)
-			->setLink(			$item->getElementsByTagName("link")->item(0)->firstChild->data)
-			->setDescription(	$item->getElementsByTagName("description")->item(0)->firstChild->data);
+			
+		$title = $item->getElementsByTagName("title")->item(0)->firstChild;
+		if (isset($title->data)) {
+			$title = $title->data;
+		}else{
+			$title = '';
+		}
+
+		$link = $item->getElementsByTagName("link")->item(0)->firstChild;
+		if (isset($link->data)) {
+			$link = $link->data;
+		}else{
+			$link = '';
+		}
+
+		$description = $item->getElementsByTagName("description")->item(0)->firstChild;
+		if (isset($description->data)) {
+			$description = $description->data;
+		}else{
+			$description = '';
+		}
+
+		$rss_item->setTitle($title)->setLink($link)->setDescription($description);
 
 		return $rss_item;
 	}
