@@ -74,11 +74,30 @@ class Rss_Item {
 		return $this;
 	}
 
+	/**
+	 *
+	 * @return string
+	 */
+	public function getPubDate(){
+		return $this->pubDate;
+	}
+
+	/**
+	 *
+	 * @param string $pubDate
+	 * @return Rss_Item
+	 */
+	public function setPubDate($pubDate){
+		$this->pubDate = $pubDate;
+		return $this;
+	}
+
 	public function toArray(){
 		return array(
 			'title' => $this->getTitle(),
 			'link' => $this->getLink(),
-			'description' => $this->getDescription()
+			'description' => $this->getDescription(),
+			'pubDate' => $this->getPubDate()
 		);
 	}
 

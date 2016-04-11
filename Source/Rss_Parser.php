@@ -77,29 +77,20 @@ class Rss_Parser {
 	 */
 	protected function parseItem(DOMNode $item){
 		$rss_item = new Rss_Item();
-			
-		$title = $item->getElementsByTagName("title")->item(0)->firstChild;
-		if (isset($title->data)) {
-			$title = $title->data;
-		}else{
-			$title = '';
+		$data = array(
+		    'title' => '',
+		    'link' => '',
+		    'description' => '',
+		    'pubDate' => '');
+
+		foreach (array_keys($data) as $key) {
+			$fetch = $item->getElementsByTagName($key)->item(0)->firstChild;
+			if (isset($fetch->data)) {
+				$data[$key] = mb_convert_encoding($fetch->data, "HTML-ENTITIES", "UTF-8");
+			}
 		}
 
-		$link = $item->getElementsByTagName("link")->item(0)->firstChild;
-		if (isset($link->data)) {
-			$link = $link->data;
-		}else{
-			$link = '';
-		}
-
-		$description = $item->getElementsByTagName("description")->item(0)->firstChild;
-		if (isset($description->data)) {
-			$description = $description->data;
-		}else{
-			$description = '';
-		}
-
-		$rss_item->setTitle($title)->setLink($link)->setDescription($description);
+		$rss_item->setTitle($data["title"])->setLink($data["link"])->setDescription($data["description"])->setPubDate($data['pubDate']);
 
 		return $rss_item;
 	}
